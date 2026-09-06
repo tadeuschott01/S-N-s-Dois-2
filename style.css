@@ -1,693 +1,1185 @@
-```css
+/* =========================================
+RESET
+========================================= */
+
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  
+  margin: 0;
+  
+  padding: 0;
+  
+  box-sizing: border-box;
+
 }
 
+/* =========================================
+VARIÁVEIS
+========================================= */
+
+:root {
+
+--rosa: #ff4778;
+
+--rosa-escuro: #e93668;
+
+--roxo: #7b42f6;
+
+--azul: #4285f4;
+
+--texto: #24212a;
+
+--texto-suave: #77727d;
+
+--branco: #ffffff;
+
+}
+
+/* =========================================
+BASE
+========================================= */
+
+html {
+
+min-height: 100%;
+
+}
 
 body {
 
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+min-height: 100vh;
 
-    min-height: 100vh;
+font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
 
-    background:
-        linear-gradient(
-            135deg,
-            #ff416c,
-            #8e2de2
-        );
+background:
+    linear-gradient(
+        145deg,
+        #fff4f7 0%,
+        #f8f1ff 50%,
+        #f3f7ff 100%
+    );
 
-    color: white;
+color:
+    var(--texto);
 
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-}
-
-
-.app {
-
-    width: 100%;
-
-    max-width: 480px;
-
-    min-height: 100vh;
-
-    padding: 25px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
+-webkit-font-smoothing:
+    antialiased;
 
 }
 
+button,
+input {
 
-.tela {
-
-    display: none;
-
-    width: 100%;
-
-    text-align: center;
-
-    animation:
-        aparecer
-        0.4s
-        ease;
+font-family:
+    inherit;
 
 }
-
-
-.tela.ativa {
-
-    display: block;
-
-}
-
-
-
-/* =========================
-   TEXTOS
-========================= */
-
-h1 {
-
-    font-size: 40px;
-
-    margin-bottom: 10px;
-
-}
-
-
-p {
-
-    font-size: 17px;
-
-    line-height: 1.5;
-
-    opacity: 0.9;
-
-    margin-bottom: 30px;
-
-}
-
-
-
-/* =========================
-   CORAÇÃO
-========================= */
-
-.coracao {
-
-    font-size: 75px;
-
-    margin-bottom: 20px;
-
-    animation:
-        pulsar
-        1.5s
-        infinite;
-
-}
-
-
-.coracao.pequeno {
-
-    font-size: 45px;
-
-    margin-bottom: 5px;
-
-}
-
-
-.premium-icon {
-
-    font-size: 65px;
-
-    margin-bottom: 15px;
-
-    animation:
-        pulsar
-        1.5s
-        infinite;
-
-}
-
-
-
-/* =========================
-   BOTÕES
-========================= */
 
 button {
 
-    width: 100%;
+border: none;
 
-    border: none;
+cursor: pointer;
 
-    padding: 17px;
-
-    border-radius: 18px;
-
-    background: white;
-
-    color: #e83e63;
-
-    font-size: 18px;
-
-    font-weight: bold;
-
-    cursor: pointer;
-
-    transition: 0.2s;
+-webkit-tap-highlight-color:
+    transparent;
 
 }
-
-
-button:hover {
-
-    transform:
-        translateY(-2px);
-
-}
-
 
 button:active {
 
-    transform:
-        scale(0.97);
+transform:
+    scale(.97);
 
 }
 
+/* =========================================
+APP
+========================================= */
 
+.app {
 
-/* =========================
-   PREMIUM
-========================= */
+width: 100%;
 
-.btn-premium {
+max-width: 520px;
 
-    margin-top: 15px;
+min-height: 100vh;
 
-    background:
-        rgba(
-            255,
-            255,
-            255,
-            0.18
-        );
+margin:
+    0 auto;
 
-    color: white;
+padding:
+    25px
+    20px
+    35px;
 
-    border:
-        1px solid
-        rgba(
-            255,
-            255,
-            255,
-            0.5
-        );
+display: flex;
+
+align-items: center;
 
 }
 
+.tela {
 
-.btn-premium-comprar {
+display: none;
 
-    background:
-        linear-gradient(
-            90deg,
-            #ffb300,
-            #ff416c
-        );
+width: 100%;
 
-    color: white;
-
-    margin-top: 20px;
+animation:
+    aparecer
+    .35s
+    ease;
 
 }
 
+.tela.ativa {
 
-
-/* =========================
-   CATEGORIAS
-========================= */
-
-.categorias {
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 15px;
-
-    margin-top: 25px;
+display: block;
 
 }
 
+/* =========================================
+TELA INICIAL
+========================================= */
 
-.categoria-btn {
+.hero {
 
-    display: grid;
+width: 100%;
 
-    grid-template-columns:
-        40px
-        1fr
-        auto;
-
-    align-items: center;
-
-    gap: 10px;
-
-    text-align: left;
-
-    padding: 18px;
-
-    background: white;
-
-    color: #333;
-
-    box-shadow:
-        0 8px
-        20px
-        rgba(
-            0,
-            0,
-            0,
-            0.15
-        );
+text-align: center;
 
 }
 
+.coracao {
 
-.categoria-btn small {
+width: 110px;
 
-    font-size: 10px;
+height: 110px;
 
-    font-weight: bold;
+margin:
+    0 auto
+    25px;
 
-    color: #e83e63;
+border-radius:
+    35px;
 
-}
+display: flex;
 
+align-items: center;
 
-.emoji {
+justify-content: center;
 
-    font-size: 24px;
+font-size: 58px;
 
-}
+background:
+    linear-gradient(
+        135deg,
+        var(--rosa),
+        #a947f7
+    );
 
+box-shadow:
+    0 20px 45px
+    rgba(
+        255,
+        71,
+        120,
+        .28
+    );
 
-.premium-btn {
-
-    border:
-        2px solid
-        #ffb300;
-
-}
-
-
-
-/* =========================
-   TOPO DO JOGO
-========================= */
-
-.topo {
-
-    display: flex;
-
-    justify-content:
-        space-between;
-
-    align-items: center;
-
-    margin-bottom: 20px;
+animation:
+    pulsar
+    2s
+    infinite;
 
 }
 
+.badge,
+.mini-label {
 
-#categoria {
+display: inline-block;
 
-    background:
-        rgba(
-            255,
-            255,
-            255,
-            0.2
-        );
+font-size: 11px;
 
-    padding:
-        9px
-        14px;
+font-weight: 800;
 
-    border-radius: 20px;
+letter-spacing: 1.5px;
 
-    font-size: 14px;
-
-    font-weight: bold;
+color:
+    var(--rosa);
 
 }
 
+.hero h1 {
 
-#numero {
+margin-top: 10px;
 
-    font-size: 14px;
+font-size:
+    clamp(
+        42px,
+        12vw,
+        58px
+    );
 
-    font-weight: bold;
+line-height: 1;
 
-}
-
-
-
-/* =========================
-   CARD
-========================= */
-
-.card {
-
-    background: white;
-
-    color: #333;
-
-    border-radius: 25px;
-
-    padding:
-        30px
-        25px;
-
-    box-shadow:
-        0 15px
-        40px
-        rgba(
-            0,
-            0,
-            0,
-            0.25
-        );
+letter-spacing:
+    -2px;
 
 }
 
+.subtitulo {
 
-.icone-pergunta {
+max-width: 420px;
 
-    font-size: 35px;
+margin:
+    18px auto
+    30px;
 
-    margin-bottom: 15px;
+color:
+    var(--texto-suave);
 
-}
+font-size: 17px;
 
-
-.card h2 {
-
-    min-height: 130px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-size: 23px;
-
-    line-height: 1.45;
+line-height: 1.6;
 
 }
 
+/* =========================================
+BOTÃO PRINCIPAL
+========================================= */
 
 .btn-principal {
 
-    margin-top: 20px;
+width: 100%;
 
-    background:
-        linear-gradient(
-            90deg,
-            #ff416c,
-            #8e2de2
-        );
+min-height: 58px;
 
-    color: white;
+padding:
+    15px
+    22px;
 
-}
+border-radius:
+    18px;
 
+display: flex;
 
+align-items: center;
 
-/* =========================
-   CARD PREMIUM
-========================= */
+justify-content: center;
 
-.premium-card h2 {
+gap: 12px;
 
-    min-height: auto;
+background:
+    linear-gradient(
+        100deg,
+        var(--rosa),
+        var(--roxo)
+    );
 
-    margin-bottom: 20px;
+color:
+    white;
 
-}
+font-size: 17px;
 
+font-weight: 800;
 
-.premium-card ul {
+box-shadow:
+    0 12px 25px
+    rgba(
+        255,
+        71,
+        120,
+        .25
+    );
 
-    list-style: none;
-
-    text-align: left;
-
-    line-height: 2;
-
-    font-size: 16px;
-
-}
-
-
-
-/* =========================
-   VOLTAR
-========================= */
-
-.voltar {
-
-    margin-top: 20px;
-
-    background:
-        transparent;
-
-    color: white;
-
-    border:
-        1px solid
-        rgba(
-            255,
-            255,
-            255,
-            0.5
-        );
+transition:
+    .2s ease;
 
 }
 
+.btn-principal:hover {
 
+transform:
+    translateY(-2px);
 
-/* =========================
-   RESULTADO
-========================= */
+box-shadow:
+    0 16px 30px
+    rgba(
+        255,
+        71,
+        120,
+        .30
+    );
+
+}
+
+.btn-principal span:last-child {
+
+font-size: 21px;
+
+}
+
+/* =========================================
+CABEÇALHO
+========================================= */
+
+.cabecalho {
+
+display: flex;
+
+align-items: center;
+
+gap: 15px;
+
+}
+
+.cabecalho h1 {
+
+margin-top: 3px;
+
+font-size: 30px;
+
+}
+
+.btn-voltar {
+
+width: 46px;
+
+height: 46px;
+
+flex-shrink: 0;
+
+border-radius:
+    15px;
+
+background:
+    white;
+
+color:
+    var(--texto);
+
+font-size: 23px;
+
+box-shadow:
+    0 8px 25px
+    rgba(
+        0,
+        0,
+        0,
+        .08
+    );
+
+}
+
+.descricao {
+
+margin:
+    15px
+    0
+    25px;
+
+color:
+    var(--texto-suave);
+
+line-height: 1.5;
+
+}
+
+/* =========================================
+FORMULÁRIO
+========================================= */
+
+.formulario {
+
+padding: 22px;
+
+border-radius:
+    24px;
+
+background:
+    white;
+
+box-shadow:
+    0 12px 35px
+    rgba(
+        40,
+        25,
+        50,
+        .08
+    );
+
+}
+
+.formulario label {
+
+display: block;
+
+margin:
+    0
+    0
+    8px;
+
+font-size: 13px;
+
+font-weight: 800;
+
+color:
+    #4d4852;
+
+}
+
+.formulario input {
+
+width: 100%;
+
+height: 54px;
+
+margin-bottom:
+    18px;
+
+padding:
+    0
+    16px;
+
+border:
+    2px solid
+    #eee9ef;
+
+border-radius:
+    15px;
+
+outline: none;
+
+color:
+    var(--texto);
+
+background:
+    white;
+
+font-size: 16px;
+
+transition:
+    .2s;
+
+}
+
+.formulario input::placeholder {
+
+color:
+    #aaa5ad;
+
+}
+
+.formulario input:focus {
+
+border-color:
+    var(--rosa);
+
+box-shadow:
+    0 0 0 4px
+    rgba(
+        255,
+        71,
+        120,
+        .10
+    );
+
+}
+
+.formulario .btn-principal {
+
+margin-top: 5px;
+
+}
+
+/* =========================================
+CATEGORIAS
+========================================= */
+
+.categorias {
+
+display: flex;
+
+flex-direction: column;
+
+gap: 13px;
+
+}
+
+.categoria-card {
+
+width: 100%;
+
+min-height: 105px;
+
+padding: 17px;
+
+border-radius:
+    22px;
+
+display: grid;
+
+grid-template-columns:
+    58px
+    1fr
+    25px;
+
+align-items: center;
+
+gap: 13px;
+
+text-align:
+    left;
+
+background:
+    white;
+
+color:
+    var(--texto);
+
+box-shadow:
+    0 8px 25px
+    rgba(
+        45,
+        30,
+        50,
+        .07
+    );
+
+transition:
+    .2s ease;
+
+}
+
+.categoria-card:hover {
+
+transform:
+    translateY(-2px);
+
+}
+
+.categoria-icone {
+
+width: 58px;
+
+height: 58px;
+
+border-radius:
+    18px;
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+font-size: 29px;
+
+}
+
+.categoria-info h2 {
+
+margin-bottom: 5px;
+
+font-size: 17px;
+
+}
+
+.categoria-info p {
+
+color:
+    var(--texto-suave);
+
+font-size: 12px;
+
+line-height: 1.4;
+
+}
+
+.seta {
+
+color: #aaa;
+
+font-size: 23px;
+
+}
+
+/* CORES */
+
+.rosa .categoria-icone {
+
+background:
+    #ffe4ec;
+
+}
+
+.roxo .categoria-icone {
+
+background:
+    #eee5ff;
+
+}
+
+.vermelho .categoria-icone {
+
+background:
+    #ffe4e8;
+
+}
+
+.azul .categoria-icone {
+
+background:
+    #e4efff;
+
+}
+
+/* =========================================
+TOPO DO JOGO
+========================================= */
+
+.jogo-topo {
+
+display: grid;
+
+grid-template-columns:
+    46px
+    1fr
+    auto;
+
+align-items: center;
+
+gap: 12px;
+
+margin-bottom: 15px;
+
+}
+
+.vez {
+
+text-align:
+    center;
+
+}
+
+.vez span {
+
+display: block;
+
+font-size: 9px;
+
+font-weight: 800;
+
+letter-spacing: 1.3px;
+
+color:
+    var(--rosa);
+
+}
+
+.vez strong {
+
+display: block;
+
+margin-top: 2px;
+
+font-size: 19px;
+
+}
+
+.contador {
+
+font-size: 13px;
+
+font-weight: 800;
+
+color:
+    var(--texto-suave);
+
+}
+
+/* =========================================
+PROGRESSO
+========================================= */
+
+.progresso {
+
+width: 100%;
+
+height: 7px;
+
+margin-bottom: 18px;
+
+overflow: hidden;
+
+border-radius:
+    20px;
+
+background:
+    #e9e5eb;
+
+}
+
+.progresso-atual {
+
+width: 0%;
+
+height: 100%;
+
+border-radius:
+    20px;
+
+background:
+    linear-gradient(
+        90deg,
+        var(--rosa),
+        var(--roxo)
+    );
+
+transition:
+    width .3s ease;
+
+}
+
+/* =========================================
+LABEL CATEGORIA
+========================================= */
+
+.categoria-label {
+
+width: fit-content;
+
+margin:
+    0 auto
+    18px;
+
+padding:
+    8px
+    14px;
+
+border-radius:
+    20px;
+
+background:
+    white;
+
+color:
+    var(--rosa);
+
+font-size: 12px;
+
+font-weight: 800;
+
+box-shadow:
+    0 5px 15px
+    rgba(
+        0,
+        0,
+        0,
+        .06
+    );
+
+}
+
+/* =========================================
+CARD PERGUNTA
+========================================= */
+
+.pergunta-card {
+
+padding:
+    30px
+    22px;
+
+border-radius:
+    28px;
+
+text-align:
+    center;
+
+background:
+    white;
+
+box-shadow:
+    0 18px 45px
+    rgba(
+        45,
+        30,
+        50,
+        .11
+    );
+
+}
+
+.pergunta-icone {
+
+margin-bottom:
+    8px;
+
+font-size:
+    34px;
+
+}
+
+.pergunta-label {
+
+font-size:
+    10px;
+
+font-weight:
+    900;
+
+letter-spacing:
+    1.5px;
+
+color:
+    var(--rosa);
+
+}
+
+.pergunta-card h2 {
+
+min-height:
+    145px;
+
+margin:
+    15px
+    0;
+
+display:
+    flex;
+
+align-items:
+    center;
+
+justify-content:
+    center;
+
+font-size:
+    clamp(
+        21px,
+        5.5vw,
+        27px
+    );
+
+line-height:
+    1.4;
+
+}
+
+.divisor {
+
+width:
+    45px;
+
+height:
+    3px;
+
+margin:
+    0 auto
+    15px;
+
+border-radius:
+    10px;
+
+background:
+    #f0d7df;
+
+}
+
+.dica {
+
+margin-bottom:
+    20px;
+
+color:
+    var(--texto-suave);
+
+font-size:
+    13px;
+
+line-height:
+    1.5;
+
+}
+
+/* =========================================
+BOTÃO SAIR
+========================================= */
+
+.btn-sair {
+
+width: 100%;
+
+margin-top:
+    16px;
+
+padding:
+    14px;
+
+background:
+    transparent;
+
+color:
+    var(--texto-suave);
+
+font-size:
+    14px;
+
+font-weight:
+    700;
+
+}
+
+/* =========================================
+RESULTADO
+========================================= */
+
+.resultado {
+
+text-align:
+    center;
+
+}
+
+.resultado-icone {
+
+margin-bottom:
+    15px;
+
+font-size:
+    65px;
+
+}
+
+.resultado h1 {
+
+margin-top:
+    8px;
+
+font-size:
+    42px;
+
+}
 
 .resultado-card {
 
-    margin-top: 25px;
+margin:
+    0
+    0
+    25px;
+
+padding:
+    22px;
+
+border-radius:
+    22px;
+
+background:
+    white;
+
+box-shadow:
+    0 12px 35px
+    rgba(
+        40,
+        25,
+        50,
+        .08
+    );
 
 }
 
+.resultado-coracao {
 
-.resultado-card h2 {
+margin-bottom:
+    10px;
 
-    min-height: 100px;
-
-}
-
-
-
-/* =========================
-   MODAL
-========================= */
-
-.modal {
-
-    display: none;
-
-    position: fixed;
-
-    inset: 0;
-
-    background:
-        rgba(
-            0,
-            0,
-            0,
-            0.65
-        );
-
-    justify-content: center;
-
-    align-items: center;
-
-    padding: 25px;
-
-    z-index: 100;
+font-size:
+    30px;
 
 }
 
+.resultado-card strong {
 
-.modal.ativo {
+display:
+    block;
 
-    display: flex;
+margin-bottom:
+    7px;
 
-}
-
-
-.modal-card {
-
-    width: 100%;
-
-    max-width: 400px;
-
-    background: white;
-
-    color: #333;
-
-    padding: 30px;
-
-    border-radius: 25px;
-
-    text-align: center;
-
-    box-shadow:
-        0 20px
-        50px
-        rgba(
-            0,
-            0,
-            0,
-            0.4
-        );
+font-size:
+    17px;
 
 }
 
+.resultado-card span {
 
-.modal-card p {
+color:
+    var(--texto-suave);
 
-    color: #555;
-
-    margin-top: 10px;
-
-}
-
-
-.fechar {
-
-    margin-top: 10px;
-
-    background: #eee;
-
-    color: #555;
+font-size:
+    13px;
 
 }
 
-
-
-/* =========================
-   ANIMAÇÕES
-========================= */
-
-@keyframes pulsar {
-
-    0% {
-
-        transform:
-            scale(1);
-
-    }
-
-    50% {
-
-        transform:
-            scale(1.12);
-
-    }
-
-    100% {
-
-        transform:
-            scale(1);
-
-    }
-
-}
-
+/* =========================================
+ANIMAÇÕES
+========================================= */
 
 @keyframes aparecer {
 
-    from {
+from {
 
-        opacity: 0;
+    opacity: 0;
 
-        transform:
-            translateY(10px);
+    transform:
+        translateY(12px);
 
-    }
+}
 
-    to {
+to {
 
-        opacity: 1;
+    opacity: 1;
 
-        transform:
-            translateY(0);
+    transform:
+        translateY(0);
 
-    }
+}
+
+}
+
+@keyframes pulsar {
+
+0% {
+
+    transform:
+        scale(1);
+
+}
+
+50% {
+
+    transform:
+        scale(1.08);
+
+}
+
+100% {
+
+    transform:
+        scale(1);
+
+}
+
+}
+
+/* =========================================
+CELULARES PEQUENOS
+========================================= */
+
+@media (max-width: 380px) {
+
+.app {
+
+    padding:
+        20px
+        15px
+        30px;
 
 }
 
 
+.hero h1 {
 
-/* =========================
-   CELULAR
-========================= */
-
-@media (max-width: 400px) {
-
-    .app {
-
-        padding: 18px;
-
-    }
-
-
-    h1 {
-
-        font-size: 34px;
-
-    }
-
-
-    .card {
-
-        padding:
-            25px
-            20px;
-
-    }
-
-
-    .card h2 {
-
-        font-size: 20px;
-
-    }
+    font-size:
+        40px;
 
 }
-```
+
+
+.coracao {
+
+    width:
+        95px;
+
+    height:
+        95px;
+
+    font-size:
+        50px;
+
+}
+
+
+.categoria-card {
+
+    min-height:
+        95px;
+
+    grid-template-columns:
+        50px
+        1fr
+        20px;
+
+    padding:
+        14px;
+
+}
+
+
+.categoria-icone {
+
+    width:
+        50px;
+
+    height:
+        50px;
+
+    font-size:
+        25px;
+
+}
+
+
+.categoria-info h2 {
+
+    font-size:
+        15px;
+
+}
+
+
+.categoria-info p {
+
+    font-size:
+        11px;
+
+}
+
+
+.pergunta-card {
+
+    padding:
+        25px
+        18px;
+
+}
+
+
+.pergunta-card h2 {
+
+    min-height:
+        135px;
+
+    font-size:
+        20px;
+
+}
+
+}
