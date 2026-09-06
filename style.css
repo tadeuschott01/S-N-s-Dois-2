@@ -1,1185 +1,1402 @@
-/* =========================================
-RESET
-========================================= */
+/* =========================================================
+   SÓ NÓS DOIS ❤️
+   SCRIPT.JS
 
-* {
-  
-  margin: 0;
-  
-  padding: 0;
-  
-  box-sizing: border-box;
+   Jogo para dois jogadores
+   - Perguntas de múltipla escolha
+   - Resposta secreta
+   - Tentativa do parceiro
+   - Pontuação
+   - Resultado final
+   - Roleta de desafios
+========================================================= */
+
+
+/* =========================================================
+   CONFIGURAÇÕES
+========================================================= */
+
+const perguntas = {
+
+    conhecendo: [
+
+        {
+            pergunta: "Qual desses lugares eu escolheria para viajar com você?",
+            opcoes: [
+                "Praia",
+                "Serra",
+                "Cidade grande",
+                "Interior"
+            ]
+        },
+
+        {
+            pergunta: "Qual dessas comidas eu escolheria para comer junto?",
+            opcoes: [
+                "Pizza",
+                "Hambúrguer",
+                "Massa",
+                "Churrasco"
+            ]
+        },
+
+        {
+            pergunta: "Qual desses presentes eu gostaria mais de ganhar?",
+            opcoes: [
+                "Uma carta",
+                "Uma viagem",
+                "Um presente surpresa",
+                "Um jantar"
+            ]
+        },
+
+        {
+            pergunta: "Qual dessas atividades eu escolheria para fazer juntos?",
+            opcoes: [
+                "Assistir filme",
+                "Sair para passear",
+                "Jogar",
+                "Ficar conversando"
+            ]
+        },
+
+        {
+            pergunta: "Qual dessas opções mais combina comigo?",
+            opcoes: [
+                "Calmo(a)",
+                "Aventureiro(a)",
+                "Engraçado(a)",
+                "Romântico(a)"
+            ]
+        },
+
+        {
+            pergunta: "Qual desses filmes eu provavelmente escolheria?",
+            opcoes: [
+                "Comédia",
+                "Romance",
+                "Ação",
+                "Terror"
+            ]
+        },
+
+        {
+            pergunta: "Qual dessas coisas eu mais valorizo em uma relação?",
+            opcoes: [
+                "Confiança",
+                "Companheirismo",
+                "Carinho",
+                "Diversão"
+            ]
+        },
+
+        {
+            pergunta: "Qual desses lugares eu escolheria para um encontro?",
+            opcoes: [
+                "Restaurante",
+                "Cinema",
+                "Parque",
+                "Praia"
+            ]
+        },
+
+        {
+            pergunta: "Qual dessas características eu mais admiro em você?",
+            opcoes: [
+                "Seu jeito",
+                "Seu humor",
+                "Sua dedicação",
+                "Seu carinho"
+            ]
+        },
+
+        {
+            pergunta: "Qual dessas coisas eu gostaria de fazer mais vezes com você?",
+            opcoes: [
+                "Viajar",
+                "Assistir filmes",
+                "Sair juntos",
+                "Conversar"
+            ]
+        }
+
+    ],
+
+
+    diversao: [
+
+        {
+            pergunta: "Quem provavelmente começaria uma dança do nada?",
+            opcoes: [
+                "Eu",
+                "Você",
+                "Os dois",
+                "Nenhum"
+            ]
+        },
+
+        {
+            pergunta: "Se pudéssemos viajar amanhã, qual seria o destino?",
+            opcoes: [
+                "Praia",
+                "Montanha",
+                "Cidade grande",
+                "Interior"
+            ]
+        },
+
+        {
+            pergunta: "Qual tipo de filme combina mais com nossa história?",
+            opcoes: [
+                "Comédia",
+                "Romance",
+                "Aventura",
+                "Comédia romântica"
+            ]
+        },
+
+        {
+            pergunta: "Quem demoraria mais para escolher um filme?",
+            opcoes: [
+                "Eu",
+                "Você",
+                "Os dois",
+                "Depende do dia"
+            ]
+        },
+
+        {
+            pergunta: "Se nossa história fosse um filme, qual seria o estilo?",
+            opcoes: [
+                "Comédia",
+                "Romance",
+                "Aventura",
+                "Tudo misturado"
+            ]
+        },
+
+        {
+            pergunta: "Quem provavelmente esqueceria onde colocou alguma coisa?",
+            opcoes: [
+                "Eu",
+                "Você",
+                "Os dois",
+                "Nenhum"
+            ]
+        },
+
+        {
+            pergunta: "Se tivéssemos um dia inteiro livre, o que faríamos?",
+            opcoes: [
+                "Sair",
+                "Viajar",
+                "Assistir filmes",
+                "Ficar juntos em casa"
+            ]
+        },
+
+        {
+            pergunta: "Quem provavelmente faria uma piada no pior momento?",
+            opcoes: [
+                "Eu",
+                "Você",
+                "Os dois",
+                "Nenhum"
+            ]
+        },
+
+        {
+            pergunta: "Qual atividade seria mais divertida para fazermos juntos?",
+            opcoes: [
+                "Karaokê",
+                "Boliche",
+                "Parque",
+                "Jogo de tabuleiro"
+            ]
+        },
+
+        {
+            pergunta: "Quem provavelmente escolheria a comida do encontro?",
+            opcoes: [
+                "Eu",
+                "Você",
+                "Os dois",
+                "Quem estiver com mais fome"
+            ]
+        }
+
+    ],
+
+
+    /* =====================================================
+       DESAFIOS PREMIUM
+       
+       Mantidos em formato divertido e não explícito.
+    ====================================================== */
+
+    desafiosPremium: [
+
+        "Faça uma declaração engraçada para o outro.",
+        "Imite o outro por 20 segundos.",
+        "Conte uma lembrança que sempre faz você sorrir.",
+        "Escolham uma música e façam uma pequena dança juntos.",
+        "Faça um elogio inesperado ao outro.",
+        "Crie um apelido divertido para o outro.",
+        "Conte uma coisa que você admira no outro.",
+        "Façam uma pose engraçada para uma foto juntos.",
+        "Escolham um lugar que gostariam de conhecer juntos.",
+        "Tentem fazer o outro rir em até 30 segundos.",
+        "Conte uma história engraçada que vocês viveram.",
+        "Cada um diga uma qualidade do outro.",
+        "Façam uma competição de caretas.",
+        "Escolham uma música que represente vocês.",
+        "Inventem um cumprimento secreto.",
+        "Cada um conte um sonho que gostaria de realizar.",
+        "Façam uma pergunta que nunca fizeram um ao outro.",
+        "Escolham um filme para assistir juntos depois do jogo.",
+        "Cada um fale uma coisa pela qual é grato.",
+        "Criem juntos um plano para um encontro perfeito."
+    ],
+
+
+    romanticoPremium: [
+
+        "Diga uma qualidade da outra pessoa que você gostaria que ela nunca esquecesse.",
+
+        "Conte qual lembrança da relação mais aquece seu coração.",
+
+        "Descreva como seria um dia perfeito juntos.",
+
+        "Diga uma coisa simples que faz você se sentir valorizado.",
+
+        "Conte qual foi um momento em que você se sentiu muito feliz ao lado do outro.",
+
+        "Fale sobre um sonho que gostaria de construir juntos.",
+
+        "Diga uma coisa que você gostaria de fazer mais vezes juntos.",
+
+        "Conte qual lugar você gostaria de visitar em uma viagem a dois.",
+
+        "Cada um diga uma coisa que aprendeu com o outro.",
+
+        "Complete: Uma das melhores coisas da nossa história é..."
+    ]
+
+};
+
+
+/* =========================================================
+   DESAFIOS DA ROLETA
+========================================================= */
+
+const desafiosRoleta = [
+
+    "Faça uma declaração engraçada para o outro. ❤️",
+
+    "Imite o outro por 20 segundos. 😂",
+
+    "Conte uma lembrança que sempre faz vocês sorrirem. 😊",
+
+    "Escolham uma música e dancem juntos. 💃",
+
+    "Faça um elogio inesperado. ❤️",
+
+    "Crie um apelido divertido para o outro. 😄",
+
+    "Conte uma coisa que você admira no outro. 💕",
+
+    "Façam uma competição de caretas. 😂",
+
+    "Escolham um lugar que gostariam de conhecer juntos. 🌎",
+
+    "Tentem fazer o outro rir primeiro. 🤣"
+
+];
+
+
+/* =========================================================
+   ESTADO DO JOGO
+========================================================= */
+
+let jogador1 = "";
+let jogador2 = "";
+
+let pontos1 = 0;
+let pontos2 = 0;
+
+let categoriaAtual = "";
+
+let perguntasJogo = [];
+
+let perguntaAtual = 0;
+
+let jogadorRespondendo = 1;
+
+let jogadorAdivinhando = 2;
+
+let respostaCorreta = -1;
+
+let rodadasCompletas = 0;
+
+let girando = false;
+
+
+/* =========================================================
+   FUNÇÃO MOSTRAR TELA
+========================================================= */
+
+function mostrarTela(id) {
+
+    const telas = document.querySelectorAll(".tela");
+
+    telas.forEach(function(tela) {
+        tela.classList.remove("ativa");
+    });
+
+    const tela = document.getElementById(id);
+
+    if (tela) {
+        tela.classList.add("ativa");
+    }
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* =========================================================
+   INÍCIO
+========================================================= */
+
+function abrirConfiguracao() {
+
+    mostrarTela("configuracao");
 
 }
 
-/* =========================================
-VARIÁVEIS
-========================================= */
 
-:root {
+/* =========================================================
+   VOLTAR AO INÍCIO
+========================================================= */
 
---rosa: #ff4778;
+function voltarInicio() {
 
---rosa-escuro: #e93668;
-
---roxo: #7b42f6;
-
---azul: #4285f4;
-
---texto: #24212a;
-
---texto-suave: #77727d;
-
---branco: #ffffff;
+    mostrarTela("inicio");
 
 }
 
-/* =========================================
-BASE
-========================================= */
 
-html {
+/* =========================================================
+   CONFIGURAÇÃO DOS JOGADORES
+========================================================= */
 
-min-height: 100%;
+function abrirCategorias() {
 
-}
+    const input1 =
+        document.getElementById("nomeJogador1");
 
-body {
+    const input2 =
+        document.getElementById("nomeJogador2");
 
-min-height: 100vh;
+    jogador1 =
+        input1.value.trim();
 
-font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    Arial,
-    sans-serif;
+    jogador2 =
+        input2.value.trim();
 
-background:
-    linear-gradient(
-        145deg,
-        #fff4f7 0%,
-        #f8f1ff 50%,
-        #f3f7ff 100%
-    );
+    if (!jogador1) {
 
-color:
-    var(--texto);
+        alert("Digite o nome do Jogador 1.");
 
--webkit-font-smoothing:
-    antialiased;
+        input1.focus();
 
-}
+        return;
+    }
 
-button,
-input {
+    if (!jogador2) {
 
-font-family:
-    inherit;
+        alert("Digite o nome do Jogador 2.");
 
-}
+        input2.focus();
 
-button {
+        return;
+    }
 
-border: none;
+    if (jogador1.toLowerCase() === jogador2.toLowerCase()) {
 
-cursor: pointer;
+        alert("Os jogadores precisam ter nomes diferentes.");
 
--webkit-tap-highlight-color:
-    transparent;
+        return;
+    }
+
+    mostrarTela("categorias");
 
 }
 
-button:active {
 
-transform:
-    scale(.97);
+/* =========================================================
+   PREMIUM
+========================================================= */
 
-}
+function abrirPremium() {
 
-/* =========================================
-APP
-========================================= */
+    fecharModal();
 
-.app {
-
-width: 100%;
-
-max-width: 520px;
-
-min-height: 100vh;
-
-margin:
-    0 auto;
-
-padding:
-    25px
-    20px
-    35px;
-
-display: flex;
-
-align-items: center;
+    mostrarTela("premium");
 
 }
 
-.tela {
 
-display: none;
+function fecharModal() {
 
-width: 100%;
+    const modal =
+        document.getElementById("modalPremium");
 
-animation:
-    aparecer
-    .35s
-    ease;
+    modal.classList.remove("aberto");
 
 }
 
-.tela.ativa {
 
-display: block;
+function assinarPremium() {
 
-}
-
-/* =========================================
-TELA INICIAL
-========================================= */
-
-.hero {
-
-width: 100%;
-
-text-align: center;
-
-}
-
-.coracao {
-
-width: 110px;
-
-height: 110px;
-
-margin:
-    0 auto
-    25px;
-
-border-radius:
-    35px;
-
-display: flex;
-
-align-items: center;
-
-justify-content: center;
-
-font-size: 58px;
-
-background:
-    linear-gradient(
-        135deg,
-        var(--rosa),
-        #a947f7
-    );
-
-box-shadow:
-    0 20px 45px
-    rgba(
-        255,
-        71,
-        120,
-        .28
-    );
-
-animation:
-    pulsar
-    2s
-    infinite;
-
-}
-
-.badge,
-.mini-label {
-
-display: inline-block;
-
-font-size: 11px;
-
-font-weight: 800;
-
-letter-spacing: 1.5px;
-
-color:
-    var(--rosa);
-
-}
-
-.hero h1 {
-
-margin-top: 10px;
-
-font-size:
-    clamp(
-        42px,
-        12vw,
-        58px
-    );
-
-line-height: 1;
-
-letter-spacing:
-    -2px;
-
-}
-
-.subtitulo {
-
-max-width: 420px;
-
-margin:
-    18px auto
-    30px;
-
-color:
-    var(--texto-suave);
-
-font-size: 17px;
-
-line-height: 1.6;
-
-}
-
-/* =========================================
-BOTÃO PRINCIPAL
-========================================= */
-
-.btn-principal {
-
-width: 100%;
-
-min-height: 58px;
-
-padding:
-    15px
-    22px;
-
-border-radius:
-    18px;
-
-display: flex;
-
-align-items: center;
-
-justify-content: center;
-
-gap: 12px;
-
-background:
-    linear-gradient(
-        100deg,
-        var(--rosa),
-        var(--roxo)
-    );
-
-color:
-    white;
-
-font-size: 17px;
-
-font-weight: 800;
-
-box-shadow:
-    0 12px 25px
-    rgba(
-        255,
-        71,
-        120,
-        .25
-    );
-
-transition:
-    .2s ease;
-
-}
-
-.btn-principal:hover {
-
-transform:
-    translateY(-2px);
-
-box-shadow:
-    0 16px 30px
-    rgba(
-        255,
-        71,
-        120,
-        .30
-    );
-
-}
-
-.btn-principal span:last-child {
-
-font-size: 21px;
-
-}
-
-/* =========================================
-CABEÇALHO
-========================================= */
-
-.cabecalho {
-
-display: flex;
-
-align-items: center;
-
-gap: 15px;
-
-}
-
-.cabecalho h1 {
-
-margin-top: 3px;
-
-font-size: 30px;
-
-}
-
-.btn-voltar {
-
-width: 46px;
-
-height: 46px;
-
-flex-shrink: 0;
-
-border-radius:
-    15px;
-
-background:
-    white;
-
-color:
-    var(--texto);
-
-font-size: 23px;
-
-box-shadow:
-    0 8px 25px
-    rgba(
-        0,
-        0,
-        0,
-        .08
-    );
-
-}
-
-.descricao {
-
-margin:
-    15px
-    0
-    25px;
-
-color:
-    var(--texto-suave);
-
-line-height: 1.5;
-
-}
-
-/* =========================================
-FORMULÁRIO
-========================================= */
-
-.formulario {
-
-padding: 22px;
-
-border-radius:
-    24px;
-
-background:
-    white;
-
-box-shadow:
-    0 12px 35px
-    rgba(
-        40,
-        25,
-        50,
-        .08
-    );
-
-}
-
-.formulario label {
-
-display: block;
-
-margin:
-    0
-    0
-    8px;
-
-font-size: 13px;
-
-font-weight: 800;
-
-color:
-    #4d4852;
-
-}
-
-.formulario input {
-
-width: 100%;
-
-height: 54px;
-
-margin-bottom:
-    18px;
-
-padding:
-    0
-    16px;
-
-border:
-    2px solid
-    #eee9ef;
-
-border-radius:
-    15px;
-
-outline: none;
-
-color:
-    var(--texto);
-
-background:
-    white;
-
-font-size: 16px;
-
-transition:
-    .2s;
-
-}
-
-.formulario input::placeholder {
-
-color:
-    #aaa5ad;
-
-}
-
-.formulario input:focus {
-
-border-color:
-    var(--rosa);
-
-box-shadow:
-    0 0 0 4px
-    rgba(
-        255,
-        71,
-        120,
-        .10
+    alert(
+        "O sistema de assinatura será conectado à Google Play na versão final."
     );
 
 }
 
-.formulario .btn-principal {
 
-margin-top: 5px;
+/* =========================================================
+   INICIAR JOGO
+========================================================= */
+
+function iniciarJogo(categoria) {
+
+    categoriaAtual = categoria;
+
+    /*
+        Por enquanto o Premium está liberado
+        para você conseguir testar o jogo.
+    */
+
+    if (
+        categoria === "desafiosPremium" ||
+        categoria === "romanticoPremium"
+    ) {
+
+        /*
+            Quando o pagamento estiver conectado,
+            essa parte poderá verificar a assinatura.
+        */
+
+    }
+
+
+    if (
+        categoria === "desafiosPremium" ||
+        categoria === "romanticoPremium"
+    ) {
+
+        iniciarDesafios(categoria);
+
+        return;
+    }
+
+
+    perguntasJogo =
+        [...perguntas[categoria]];
+
+    embaralhar(perguntasJogo);
+
+    perguntaAtual = 0;
+
+    pontos1 = 0;
+    pontos2 = 0;
+
+    rodadasCompletas = 0;
+
+    jogadorRespondendo = 1;
+
+    jogadorAdivinhando = 2;
+
+    iniciarRodada();
 
 }
 
-/* =========================================
-CATEGORIAS
-========================================= */
 
-.categorias {
+/* =========================================================
+   INICIAR PERGUNTAS
+========================================================= */
 
-display: flex;
+function iniciarRodada() {
 
-flex-direction: column;
+    if (perguntaAtual >= perguntasJogo.length) {
 
-gap: 13px;
+        finalizarJogo();
+
+        return;
+    }
+
+    const jogadorResposta =
+        jogadorRespondendo === 1
+            ? jogador1
+            : jogador2;
+
+    const jogadorAdivinha =
+        jogadorAdivinhando === 1
+            ? jogador1
+            : jogador2;
+
+
+    document.getElementById("passarTitulo").textContent =
+        "Passe o celular para " + jogadorResposta;
+
+    document.getElementById("passarTexto").textContent =
+        jogadorResposta +
+        ", é sua vez de responder secretamente.";
+
+
+    document.getElementById("respostaTitulo").textContent =
+        jogadorResposta +
+        ", escolha sua resposta.";
+
+
+    mostrarTela("passarCelular");
 
 }
 
-.categoria-card {
 
-width: 100%;
+/* =========================================================
+   CONTINUAR TURNO
+========================================================= */
 
-min-height: 105px;
+function continuarTurno() {
 
-padding: 17px;
+    const pergunta =
+        perguntasJogo[perguntaAtual];
 
-border-radius:
-    22px;
+    if (!pergunta) {
+        finalizarJogo();
+        return;
+    }
 
-display: grid;
 
-grid-template-columns:
-    58px
-    1fr
-    25px;
+    if (jogadorRespondendo === 1 ||
+        jogadorRespondendo === 2) {
 
-align-items: center;
+        mostrarRespostaSecreta();
 
-gap: 13px;
+    }
 
-text-align:
-    left;
+}
 
-background:
-    white;
 
-color:
-    var(--texto);
+/* =========================================================
+   MOSTRAR RESPOSTA SECRETA
+========================================================= */
 
-box-shadow:
-    0 8px 25px
-    rgba(
-        45,
-        30,
-        50,
-        .07
+function mostrarRespostaSecreta() {
+
+    const pergunta =
+        perguntasJogo[perguntaAtual];
+
+
+    document.getElementById(
+        "perguntaSecreta"
+    ).textContent =
+        pergunta.pergunta;
+
+
+    const container =
+        document.getElementById(
+            "opcoesResposta"
+        );
+
+    container.innerHTML = "";
+
+
+    pergunta.opcoes.forEach(
+        function(opcao, indice) {
+
+            const botao =
+                document.createElement("button");
+
+            botao.className = "opcao";
+
+            botao.textContent =
+                opcao;
+
+            botao.onclick = function() {
+
+                escolherRespostaSecreta(indice);
+
+            };
+
+            container.appendChild(botao);
+
+        }
     );
 
-transition:
-    .2s ease;
+
+    mostrarTela("respostaSecreta");
 
 }
 
-.categoria-card:hover {
 
-transform:
-    translateY(-2px);
+/* =========================================================
+   ESCOLHER RESPOSTA SECRETA
+========================================================= */
 
-}
+function escolherRespostaSecreta(indice) {
 
-.categoria-icone {
+    respostaCorreta = indice;
 
-width: 58px;
 
-height: 58px;
+    const jogadorAdivinha =
+        jogadorAdivinhando === 1
+            ? jogador1
+            : jogador2;
 
-border-radius:
-    18px;
 
-display: flex;
+    document.getElementById(
+        "passarTitulo"
+    ).textContent =
+        "Passe o celular para " +
+        jogadorAdivinha;
 
-align-items: center;
 
-justify-content: center;
+    document.getElementById(
+        "passarTexto"
+    ).textContent =
+        jogadorAdivinha +
+        ", agora tente adivinhar a resposta.";
 
-font-size: 29px;
 
-}
+    mostrarTela("passarCelular");
 
-.categoria-info h2 {
 
-margin-bottom: 5px;
+    setTimeout(
+        function() {
 
-font-size: 17px;
+            prepararAdivinhacao();
 
-}
-
-.categoria-info p {
-
-color:
-    var(--texto-suave);
-
-font-size: 12px;
-
-line-height: 1.4;
-
-}
-
-.seta {
-
-color: #aaa;
-
-font-size: 23px;
-
-}
-
-/* CORES */
-
-.rosa .categoria-icone {
-
-background:
-    #ffe4ec;
-
-}
-
-.roxo .categoria-icone {
-
-background:
-    #eee5ff;
-
-}
-
-.vermelho .categoria-icone {
-
-background:
-    #ffe4e8;
-
-}
-
-.azul .categoria-icone {
-
-background:
-    #e4efff;
-
-}
-
-/* =========================================
-TOPO DO JOGO
-========================================= */
-
-.jogo-topo {
-
-display: grid;
-
-grid-template-columns:
-    46px
-    1fr
-    auto;
-
-align-items: center;
-
-gap: 12px;
-
-margin-bottom: 15px;
-
-}
-
-.vez {
-
-text-align:
-    center;
-
-}
-
-.vez span {
-
-display: block;
-
-font-size: 9px;
-
-font-weight: 800;
-
-letter-spacing: 1.3px;
-
-color:
-    var(--rosa);
-
-}
-
-.vez strong {
-
-display: block;
-
-margin-top: 2px;
-
-font-size: 19px;
-
-}
-
-.contador {
-
-font-size: 13px;
-
-font-weight: 800;
-
-color:
-    var(--texto-suave);
-
-}
-
-/* =========================================
-PROGRESSO
-========================================= */
-
-.progresso {
-
-width: 100%;
-
-height: 7px;
-
-margin-bottom: 18px;
-
-overflow: hidden;
-
-border-radius:
-    20px;
-
-background:
-    #e9e5eb;
-
-}
-
-.progresso-atual {
-
-width: 0%;
-
-height: 100%;
-
-border-radius:
-    20px;
-
-background:
-    linear-gradient(
-        90deg,
-        var(--rosa),
-        var(--roxo)
-    );
-
-transition:
-    width .3s ease;
-
-}
-
-/* =========================================
-LABEL CATEGORIA
-========================================= */
-
-.categoria-label {
-
-width: fit-content;
-
-margin:
-    0 auto
-    18px;
-
-padding:
-    8px
-    14px;
-
-border-radius:
-    20px;
-
-background:
-    white;
-
-color:
-    var(--rosa);
-
-font-size: 12px;
-
-font-weight: 800;
-
-box-shadow:
-    0 5px 15px
-    rgba(
-        0,
-        0,
-        0,
-        .06
+        },
+        300
     );
 
 }
 
-/* =========================================
-CARD PERGUNTA
-========================================= */
 
-.pergunta-card {
+/* =========================================================
+   PREPARAR ADIVINHAÇÃO
+========================================================= */
 
-padding:
-    30px
-    22px;
+function prepararAdivinhacao() {
 
-border-radius:
-    28px;
+    const pergunta =
+        perguntasJogo[perguntaAtual];
 
-text-align:
-    center;
 
-background:
-    white;
+    const jogadorAdivinha =
+        jogadorAdivinhando === 1
+            ? jogador1
+            : jogador2;
 
-box-shadow:
-    0 18px 45px
-    rgba(
-        45,
-        30,
-        50,
-        .11
+
+    document.getElementById(
+        "adivinhacaoTitulo"
+    ).textContent =
+        jogadorAdivinha +
+        ", qual você acha que é a resposta?";
+
+
+    document.getElementById(
+        "perguntaAdivinhacao"
+    ).textContent =
+        pergunta.pergunta;
+
+
+    const container =
+        document.getElementById(
+            "opcoesAdivinhacao"
+        );
+
+    container.innerHTML = "";
+
+
+    pergunta.opcoes.forEach(
+        function(opcao, indice) {
+
+            const botao =
+                document.createElement("button");
+
+            botao.className = "opcao";
+
+            botao.textContent =
+                opcao;
+
+            botao.onclick = function() {
+
+                verificarResposta(indice);
+
+            };
+
+            container.appendChild(botao);
+
+        }
+    );
+
+
+    mostrarTela("adivinhacao");
+
+}
+
+
+/* =========================================================
+   VERIFICAR RESPOSTA
+========================================================= */
+
+function verificarResposta(indiceEscolhido) {
+
+    const acertou =
+        indiceEscolhido === respostaCorreta;
+
+
+    if (acertou) {
+
+        if (jogadorAdivinhando === 1) {
+
+            pontos1++;
+
+        } else {
+
+            pontos2++;
+
+        }
+
+    }
+
+
+    const opcoes =
+        document.querySelectorAll(
+            "#opcoesAdivinhacao .opcao"
+        );
+
+
+    opcoes.forEach(
+        function(botao, indice) {
+
+            botao.disabled = true;
+
+            if (indice === respostaCorreta) {
+
+                botao.classList.add(
+                    "correta"
+                );
+
+            }
+
+            if (
+                indice === indiceEscolhido &&
+                indice !== respostaCorreta
+            ) {
+
+                botao.classList.add(
+                    "errada"
+                );
+
+            }
+
+        }
+    );
+
+
+    mostrarResultadoRodada(acertou);
+
+}
+
+
+/* =========================================================
+   RESULTADO DA RODADA
+========================================================= */
+
+function mostrarResultadoRodada(acertou) {
+
+    const jogadorAdivinha =
+        jogadorAdivinhando === 1
+            ? jogador1
+            : jogador2;
+
+
+    const jogadorResposta =
+        jogadorRespondendo === 1
+            ? jogador1
+            : jogador2;
+
+
+    const pergunta =
+        perguntasJogo[perguntaAtual];
+
+
+    document.getElementById(
+        "nomePlacar1"
+    ).textContent =
+        jogador1;
+
+
+    document.getElementById(
+        "nomePlacar2"
+    ).textContent =
+        jogador2;
+
+
+    document.getElementById(
+        "pontosPlacar1"
+    ).textContent =
+        pontos1;
+
+
+    document.getElementById(
+        "pontosPlacar2"
+    ).textContent =
+        pontos2;
+
+
+    if (acertou) {
+
+        document.getElementById(
+            "resultadoIcone"
+        ).textContent =
+            "🎉";
+
+
+        document.getElementById(
+            "resultadoTitulo"
+        ).textContent =
+            "Acertou!";
+
+
+        document.getElementById(
+            "resultadoTexto"
+        ).textContent =
+            jogadorAdivinha +
+            " acertou a resposta de " +
+            jogadorResposta +
+            "!";
+
+
+    } else {
+
+        document.getElementById(
+            "resultadoIcone"
+        ).textContent =
+            "😅";
+
+
+        document.getElementById(
+            "resultadoTitulo"
+        ).textContent =
+            "Não foi dessa vez!";
+
+
+        document.getElementById(
+            "resultadoTexto"
+        ).textContent =
+            jogadorAdivinha +
+            " não conseguiu adivinhar. A resposta era: " +
+            pergunta.opcoes[respostaCorreta] +
+            ".";
+
+    }
+
+
+    mostrarTela("resultadoRodada");
+
+}
+
+
+/* =========================================================
+   PRÓXIMA RODADA
+========================================================= */
+
+function proximaRodada() {
+
+    perguntaAtual++;
+
+    rodadasCompletas++;
+
+
+    /*
+        Troca os jogadores:
+
+        Quem respondeu agora passa
+        a tentar adivinhar.
+
+        Quem adivinhou passa
+        a responder.
+    */
+
+    const antigoRespondendo =
+        jogadorRespondendo;
+
+
+    jogadorRespondendo =
+        jogadorAdivinhando;
+
+
+    jogadorAdivinhando =
+        antigoRespondendo;
+
+
+    iniciarRodada();
+
+}
+
+
+/* =========================================================
+   FINALIZAR JOGO
+========================================================= */
+
+function finalizarJogo() {
+
+    document.getElementById(
+        "finalNome1"
+    ).textContent =
+        jogador1;
+
+
+    document.getElementById(
+        "finalNome2"
+    ).textContent =
+        jogador2;
+
+
+    document.getElementById(
+        "finalPontos1"
+    ).textContent =
+        pontos1;
+
+
+    document.getElementById(
+        "finalPontos2"
+    ).textContent =
+        pontos2;
+
+
+    const resultado =
+        document.getElementById(
+            "resultadoFinal"
+        );
+
+
+    if (pontos1 > pontos2) {
+
+        resultado.innerHTML =
+            "🏆 <strong>" +
+            jogador1 +
+            "</strong> venceu!<br>" +
+            jogador2 +
+            " perdeu e vai para a roleta.";
+
+    } else if (pontos2 > pontos1) {
+
+        resultado.innerHTML =
+            "🏆 <strong>" +
+            jogador2 +
+            "</strong> venceu!<br>" +
+            jogador1 +
+            " perdeu e vai para a roleta.";
+
+    } else {
+
+        resultado.innerHTML =
+            "🤝 Deu empate!<br>" +
+            "Os dois podem girar a roleta.";
+
+    }
+
+
+    mostrarTela("placarFinal");
+
+}
+
+
+/* =========================================================
+   IDENTIFICAR PERDEDOR
+========================================================= */
+
+function obterPerdedor() {
+
+    if (pontos1 < pontos2) {
+
+        return jogador1;
+
+    }
+
+    if (pontos2 < pontos1) {
+
+        return jogador2;
+
+    }
+
+    return "Os dois";
+
+}
+
+
+/* =========================================================
+   ROLETA
+========================================================= */
+
+function abrirRoleta() {
+
+    const perdedor =
+        obterPerdedor();
+
+
+    const descricao =
+        document.getElementById(
+            "roletaDescricao"
+        );
+
+
+    if (perdedor === "Os dois") {
+
+        descricao.textContent =
+            "Deu empate! Os dois podem participar do desafio.";
+
+    } else {
+
+        descricao.textContent =
+            perdedor +
+            " perdeu e deve cumprir o desafio!";
+
+    }
+
+
+    document.getElementById(
+        "desafioResultado"
+    ).textContent =
+        "Clique em GIRAR para começar!";
+
+
+    document.getElementById(
+        "btnGirar"
+    ).classList.remove("escondido");
+
+
+    document.getElementById(
+        "btnNovoJogo"
+    ).classList.add("escondido");
+
+
+    mostrarTela("roleta");
+
+}
+
+
+/* =========================================================
+   GIRAR ROLETA
+========================================================= */
+
+function girarRoleta() {
+
+    if (girando) {
+        return;
+    }
+
+
+    girando = true;
+
+
+    const wheel =
+        document.getElementById(
+            "roletaWheel"
+        );
+
+
+    const botao =
+        document.getElementById(
+            "btnGirar"
+        );
+
+
+    botao.disabled = true;
+
+    botao.textContent =
+        "🎡 GIRANDO...";
+
+
+    const numeroDesafios =
+        desafiosRoleta.length;
+
+
+    const indice =
+        Math.floor(
+            Math.random() *
+            numeroDesafios
+        );
+
+
+    const grausPorDesafio =
+        360 /
+        numeroDesafios;
+
+
+    /*
+        Muitas voltas + posição aleatória.
+    */
+
+    const voltas =
+        5 + Math.floor(
+            Math.random() * 3
+        );
+
+
+    const anguloFinal =
+        (
+            voltas * 360
+        ) +
+        (
+            indice *
+            grausPorDesafio
+        ) +
+        (
+            grausPorDesafio / 2
+        );
+
+
+    wheel.style.transform =
+        "rotate(" +
+        anguloFinal +
+        "deg)";
+
+
+    setTimeout(
+        function() {
+
+            mostrarDesafio(indice);
+
+        },
+        4100
     );
 
 }
 
-.pergunta-icone {
 
-margin-bottom:
-    8px;
+/* =========================================================
+   MOSTRAR DESAFIO
+========================================================= */
 
-font-size:
-    34px;
+function mostrarDesafio(indice) {
 
-}
+    const desafio =
+        desafiosRoleta[indice];
 
-.pergunta-label {
 
-font-size:
-    10px;
+    document.getElementById(
+        "desafioResultado"
+    ).textContent =
+        "🔥 " + desafio;
 
-font-weight:
-    900;
 
-letter-spacing:
-    1.5px;
+    document.getElementById(
+        "btnGirar"
+    ).textContent =
+        "🎡 GIRAR NOVAMENTE";
 
-color:
-    var(--rosa);
 
-}
+    document.getElementById(
+        "btnGirar"
+    ).disabled =
+        false;
 
-.pergunta-card h2 {
 
-min-height:
-    145px;
-
-margin:
-    15px
-    0;
-
-display:
-    flex;
-
-align-items:
-    center;
-
-justify-content:
-    center;
-
-font-size:
-    clamp(
-        21px,
-        5.5vw,
-        27px
+    document.getElementById(
+        "btnNovoJogo"
+    ).classList.remove(
+        "escondido"
     );
 
-line-height:
-    1.4;
+
+    girando = false;
 
 }
 
-.divisor {
 
-width:
-    45px;
+/* =========================================================
+   VOLTAR PARA CATEGORIAS
+========================================================= */
 
-height:
-    3px;
+function voltarCategoriasDepoisDoJogo() {
 
-margin:
-    0 auto
-    15px;
+    pontos1 = 0;
 
-border-radius:
-    10px;
+    pontos2 = 0;
 
-background:
-    #f0d7df;
+    perguntaAtual = 0;
 
-}
+    rodadasCompletas = 0;
 
-.dica {
+    categoriaAtual = "";
 
-margin-bottom:
-    20px;
-
-color:
-    var(--texto-suave);
-
-font-size:
-    13px;
-
-line-height:
-    1.5;
-
-}
-
-/* =========================================
-BOTÃO SAIR
-========================================= */
-
-.btn-sair {
-
-width: 100%;
-
-margin-top:
-    16px;
-
-padding:
-    14px;
-
-background:
-    transparent;
-
-color:
-    var(--texto-suave);
-
-font-size:
-    14px;
-
-font-weight:
-    700;
-
-}
-
-/* =========================================
-RESULTADO
-========================================= */
-
-.resultado {
-
-text-align:
-    center;
-
-}
-
-.resultado-icone {
-
-margin-bottom:
-    15px;
-
-font-size:
-    65px;
-
-}
-
-.resultado h1 {
-
-margin-top:
-    8px;
-
-font-size:
-    42px;
-
-}
-
-.resultado-card {
-
-margin:
-    0
-    0
-    25px;
-
-padding:
-    22px;
-
-border-radius:
-    22px;
-
-background:
-    white;
-
-box-shadow:
-    0 12px 35px
-    rgba(
-        40,
-        25,
-        50,
-        .08
-    );
-
-}
-
-.resultado-coracao {
-
-margin-bottom:
-    10px;
-
-font-size:
-    30px;
-
-}
-
-.resultado-card strong {
-
-display:
-    block;
-
-margin-bottom:
-    7px;
-
-font-size:
-    17px;
-
-}
-
-.resultado-card span {
-
-color:
-    var(--texto-suave);
-
-font-size:
-    13px;
-
-}
-
-/* =========================================
-ANIMAÇÕES
-========================================= */
-
-@keyframes aparecer {
-
-from {
-
-    opacity: 0;
-
-    transform:
-        translateY(12px);
-
-}
-
-to {
-
-    opacity: 1;
-
-    transform:
-        translateY(0);
-
-}
-
-}
-
-@keyframes pulsar {
-
-0% {
-
-    transform:
-        scale(1);
-
-}
-
-50% {
-
-    transform:
-        scale(1.08);
-
-}
-
-100% {
-
-    transform:
-        scale(1);
-
-}
-
-}
-
-/* =========================================
-CELULARES PEQUENOS
-========================================= */
-
-@media (max-width: 380px) {
-
-.app {
-
-    padding:
-        20px
-        15px
-        30px;
+    mostrarTela("categorias");
 
 }
 
 
-.hero h1 {
+/* =========================================================
+   VOLTAR DO PLACAR PARA ROLETA
+========================================================= */
 
-    font-size:
-        40px;
+function voltarPlacarFinal() {
 
-}
-
-
-.coracao {
-
-    width:
-        95px;
-
-    height:
-        95px;
-
-    font-size:
-        50px;
+    mostrarTela("placarFinal");
 
 }
 
 
-.categoria-card {
+/* =========================================================
+   DESAFIOS PREMIUM
+========================================================= */
 
-    min-height:
-        95px;
+function iniciarDesafios(categoria) {
 
-    grid-template-columns:
-        50px
-        1fr
-        20px;
+    const lista =
+        perguntas[categoria];
 
-    padding:
-        14px;
+
+    if (!lista || lista.length === 0) {
+
+        alert(
+            "Essa categoria ainda não possui desafios."
+        );
+
+        return;
+    }
+
+
+    /*
+        Escolhe um desafio aleatório.
+    */
+
+    const indice =
+        Math.floor(
+            Math.random() *
+            lista.length
+        );
+
+
+    const desafio =
+        lista[indice];
+
+
+    const perdedor =
+        obterPerdedor();
+
+
+    let mensagem =
+        "";
+
+
+    if (perdedor === "Os dois") {
+
+        mensagem =
+            "Desafio para os dois! ❤️\n\n" +
+            desafio;
+
+    } else {
+
+        mensagem =
+            "Desafio para " +
+            perdedor +
+            ":\n\n" +
+            desafio;
+
+    }
+
+
+    alert(mensagem);
+
+
+    mostrarTela("categorias");
 
 }
 
 
-.categoria-icone {
+/* =========================================================
+   EMBARALHAR ARRAY
+========================================================= */
 
-    width:
-        50px;
+function embaralhar(array) {
 
-    height:
-        50px;
+    for (
+        let i = array.length - 1;
+        i > 0;
+        i--
+    ) {
 
-    font-size:
-        25px;
-
-}
-
-
-.categoria-info h2 {
-
-    font-size:
-        15px;
-
-}
+        const j =
+            Math.floor(
+                Math.random() *
+                (i + 1)
+            );
 
 
-.categoria-info p {
-
-    font-size:
-        11px;
-
-}
+        const temporario =
+            array[i];
 
 
-.pergunta-card {
-
-    padding:
-        25px
-        18px;
-
-}
+        array[i] =
+            array[j];
 
 
-.pergunta-card h2 {
+        array[j] =
+            temporario;
 
-    min-height:
-        135px;
+    }
 
-    font-size:
-        20px;
+
+    return array;
 
 }
 
-}
+
+/* =========================================================
+   BLOQUEAR ENTER EM INPUT
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Enter" &&
+            document
+                .getElementById("configuracao")
+                .classList
+                .contains("ativa")
+        ) {
+
+            abrirCategorias();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   INICIALIZAÇÃO
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        mostrarTela("inicio");
+
+    }
+);
